@@ -1,4 +1,35 @@
 # langchain-webcrawler
 
-Based on LangStream's example application 
- 
+
+
+Based on https://langstream.ai[LangStream^]'s example application called https://github.com/LangStream/langstream/blob/main/examples/applications/webcrawler-source/README.md[Webcrawler^], I've attempted to recreate the application in https://langchain.com[LangChain^].
+
+## Chains
+
+There are 2 custom chains in this application:
+
+- crawler: This crawls the site, renders the html, and splits the text into tokens. The output is a collection of LangChain documents.
+- writeToAstra: This accepts the collection of documents and uses LangChain's Cassandra vector store to store the documents. The Cassandra db is hosted on https://astra.datastax.com[DataStax Astra^].
+
+## Running the application
+
+The application takes an argument of which chain to run. The options are:
+
+- crawl-site: This will kick off the crawler chain.
+- chat: This will kick off a RetrievalQA chatbot that uses the https://python.langchain.com/docs/integrations/vectorstores/cassandra[Cassandra vector^] store and the https://api.python.langchain.com/en/latest/chat_models/langchain.chat_models.azure_openai.AzureChatOpenAI.html[AzureChatOpenAI^] llm model.
+
+## Creds
+
+Create a .env file with the following:
+
+```
+OPENAI_API_KEY="<replace>"
+OPENAI_API_BASE="<replace>"
+OPENAI_API_TYPE="<replace>"
+OPENAI_API_VERSION="<replace>"
+```
+
+## Fair warning
+
+There are a TON of hardcoded things in here. This can be a solid start to creating something real, but it's not there yet.
+
